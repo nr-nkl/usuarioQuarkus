@@ -25,6 +25,7 @@ tags:
 #Endpoints de la Entidad
 #----------------------------
 paths:
+# ------------------- Crear Usuario ---------------------
   /v1/es/crearUsuario: #La ruta de la api
     post:
       tags:
@@ -49,6 +50,7 @@ paths:
           description: "Parámetros de entrada no validos."
         "404":
           description: "No se encuentra la novedad."
+# -------------------- Listar Usuario -------------------------
   /v1/es/listUsuario/{idtbl_user}:
     get:
       tags:
@@ -64,7 +66,80 @@ paths:
       operationId: listarUsuario
       responses:
         "200":
-          description: Usuario creado.
+          description: Usuario encontrado.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UsuarioTypeResponse"
+        "400":
+          description: "Parámetros de entrada no validos."
+        "404":
+          description: "No se encuentra la novedad."
+#---------------- Eliminar Usuario ----------------
+  /v1/es/eliminarUsuario/{idtbl_user}:
+    delete:
+      tags:
+        - Eliminar Usuario
+      parameters:
+        - in: path
+          name: idtbl_user   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      operationId: eliminarUsuario
+      responses:
+        "200":
+          description: Usuario eliminado.
+        "400":
+          description: "Parámetros de entrada no validos."
+        "404":
+          description: "No se encuentra la novedad."
+#--------------- Listar Usuarios -----------------
+  /v1/es/listadoUsuarios:
+    get:
+      tags:
+        - Listar todos los usuario
+      operationId: listarTodosLosUsuario
+      responses:
+        "200":
+          description: Lista de usuario.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UsuarioTypeResponse"
+        "400":
+          description: "Parámetros de entrada no validos."
+        "404":
+          description: "No se encuentra la novedad."
+#------------- Actualizar Usuario ----------------
+  /v1/es/editarUsuario/{idtbl_user}:
+    put:
+      tags:
+        - Editar usuario
+      parameters:
+        - in: path
+          name: idtbl_user   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+          description: The user ID
+      operationId: editarUsuario
+      requestBody:
+        description: Editar usuario
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UsuarioTypeInput"
+      responses:
+        "200":
+          description: Usuario editado.
           content:
             application/json:
               schema:
@@ -83,20 +158,20 @@ components:
     UsuarioTypeResponse:
       type: object
       properties:
-        tbl_name:
+        name:
           type: string
-        tbl_lastname:
+        lastname:
           type: string
-        tbl_createat:
+        createat:
           type: string
           format: date
     UsuarioTypeInput:
       type: object
       properties:
-        tbl_name:
+        name:
           type: string
-        tbl_lastname:
+        lastname:
           type: string
-        tbl_createat:
+        createat:
           type: string
           format: date

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -18,8 +19,12 @@ import java.util.Date;
 public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long id_user;
-    public String name_user;
-    public String lastname_user;
-    public Date createat_user;
+    @Column (name = "id_user")
+    public Long id;
+    @Column (name = "name_user")
+    public String name;
+    @Column (name = "lastname_user")
+    public String lastname;
+    @Column (name = "createat_user")
+    public LocalDate createat;
 }
