@@ -25,28 +25,31 @@ public class UsuarioController implements V1UsuarioApi {
 
     @Override
     public List<UsuarioTypeResponse> crearUsuario(UsuarioTypeInput usuarioTypeInput) {
-        LOG.info("Termino el proceso crearUsuario");
+        LOG.info("Inicio el proceso crearUsuario");
         return  usuarioServiceImpl.crearUsuario(usuarioTypeInput);
     }
 
     @Override
     public List<UsuarioTypeResponse> editarUsuario(Integer idtblUser, UsuarioTypeInput usuarioTypeInput) {
-        return null;
+        LOG.info("Inicio el proceso editarUsuario");
+        return usuarioServiceImpl.editarUsuario(idtblUser, usuarioTypeInput);
     }
 
     @Override
     public void eliminarUsuario(Integer idtblUser) {
-
+        LOG.info("Inicio el proceso eliminarUsuario.");
+        usuarioServiceImpl.eliminarUsuario(idtblUser);
     }
 
     @Override
     public List<UsuarioTypeResponse> listarTodosLosUsuario() {
-        return null;
+        LOG.info("Inicio el proceso listarTodosLosUsuarios.");
+        return usuarioServiceImpl.listarTodosLosUsuarios();
     }
 
     @Override
     public List<UsuarioTypeResponse> listarUsuario(Integer idtblUser) {
-        LOG.info("Termina el proceso de listar usuario");
+        LOG.info("Inicio el proceso de listarUsuario");
         return usuarioServiceImpl.listarUsuario(idtblUser);
     }
 

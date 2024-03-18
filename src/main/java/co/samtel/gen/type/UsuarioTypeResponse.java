@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("UsuarioTypeResponse")
-@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2024-03-15T17:55:41.938180500-05:00[America/Bogota]")
+@jakarta.annotation.Generated(value = "org.openapitools.codegen.languages.JavaJAXRSSpecServerCodegen", date = "2024-03-17T19:53:02.559578300-05:00[America/Bogota]", comments = "Generator version: 7.4.0")
 public class UsuarioTypeResponse   {
   private @Valid String name;
   private @Valid String lastname;

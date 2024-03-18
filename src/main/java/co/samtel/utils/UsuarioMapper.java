@@ -6,6 +6,7 @@ import co.samtel.gen.type.UsuarioTypeResponse;
 import jakarta.enterprise.context.ApplicationScoped;
 import org.modelmapper.ModelMapper;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,21 +15,19 @@ public class UsuarioMapper {
     public Usuario usuarioTypeToEntity(UsuarioTypeInput usuarioTypeInput){
         return  new ModelMapper().map(usuarioTypeInput, Usuario.class);
     }
-
-    public UsuarioTypeInput clienteEntityToType(Usuario usuario){
-        return new ModelMapper().map(usuario, UsuarioTypeInput.class);
-    }
     public UsuarioTypeResponse usuarioEntityToTypeResponse(Usuario usuario) {
         return new ModelMapper().map(usuario, UsuarioTypeResponse.class);
     }
 
-    public UsuarioTypeResponse usuarioInputToTypeResponse(UsuarioTypeInput usuarioTypeInput) {
-        return new ModelMapper().map(usuarioTypeInput, UsuarioTypeResponse.class);
-    }
+    public List<UsuarioTypeResponse> usuarioTypeListEntityToTypeResponse(List<Usuario> listUsuarios ){
+        List<UsuarioTypeResponse> usuariosTypeResponseList = new ArrayList<>();
 
-    public List<Usuario> usuarioTypeListToEntity(List<UsuarioTypeInput> usuarioTypeList){
-        return  usuarioTypeList.stream().map(usuario -> usuarioTypeToEntity(usuario))
-                .collect(Collectors.toList());
+        for (Usuario usuario: listUsuarios){
+            UsuarioTypeResponse response = new ModelMapper().map(usuario, UsuarioTypeResponse.class);
+            usuariosTypeResponseList.add(response);
+        }
+
+        return usuariosTypeResponseList;
     }
 
 
