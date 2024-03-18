@@ -5,6 +5,7 @@ import co.samtel.dao.UsuarioDao;
 import co.samtel.entity.Usuario;
 import co.samtel.gen.type.UsuarioTypeInput;
 import co.samtel.gen.type.UsuarioTypeResponse;
+import co.samtel.service.contract.IUsuarioService;
 import co.samtel.utils.ApplicationException;
 import co.samtel.utils.UsuarioMapper;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
@@ -20,8 +21,8 @@ import java.util.List;
 import static co.samtel.constant.Constant.ERROR_SERVICIO;
 
 @ApplicationScoped
-public class UsuarioServiceImpl {
-    private static final Logger LOG = LoggerFactory.getLogger(UsuarioController.class);
+public class UsuarioServiceImpl implements IUsuarioService {
+    private static final Logger LOG = LoggerFactory.getLogger(UsuarioServiceImpl.class);
 
     @Inject
     UsuarioMapper usuarioMapper;
@@ -30,30 +31,16 @@ public class UsuarioServiceImpl {
     UsuarioDao usuarioDao;
 
     @Transactional
-    public List<UsuarioTypeResponse> crearUsuario(UsuarioTypeInput usuarioTypeInput) {
+    public UsuarioTypeResponse crearUsuario(UsuarioTypeInput usuarioTypeInput) {
         LOG.info("Inicia crearUsuario Impl");
         try {
             Usuario usuario = usuarioMapper.usuarioTypeToEntity(usuarioTypeInput);
             usuarioDao.persist(usuario);
             UsuarioTypeResponse usuarioTypeResponses = usuarioMapper.usuarioEntityToTypeResponse(usuario);
             LOG.info("Finaliza crearUsuario Impl");
-            return  Collections.singletonList(usuarioTypeResponses);
+            return  usuarioTypeResponses;
         }catch (ApplicationException e){
             LOG.error("Error al crear usuario");
-            throw new ApplicationException(ERROR_SERVICIO + e.getMessage());
-        }
-    }
-
-    public List<UsuarioTypeResponse> listarUsuario(Integer idtblUser){
-        LOG.info("Inicia listarUsuario Impl");
-
-        try {
-            Usuario usuario = usuarioDao.findById(idtblUser.longValue());
-            UsuarioTypeResponse response = usuarioMapper.usuarioEntityToTypeResponse(usuario);
-            LOG.info("Finaliza listar usuario por id Impl");
-            return  Collections.singletonList(response);
-        }catch (ApplicationException e){
-            LOG.error("Se presento un error al listar usuario por id"+ e.getMessage());
             throw new ApplicationException(ERROR_SERVICIO + e.getMessage());
         }
     }
@@ -89,6 +76,20 @@ public class UsuarioServiceImpl {
             LOG.info("Termina eliminarUsuario Impl.");
         }catch (ApplicationException e){
             LOG.error("Ha ocurrido un error en eliminarUsuario: "+e.getMessage());
+            throw new ApplicationException(ERROR_SERVICIO + e.getMessage());
+        }
+    }
+
+    public List<UsuarioTypeResponse> listarUsuario(Integer idtblUser){
+        LOG.info("Inicia listarUsuario Impl");
+
+        try {
+            Usuario usuario = usuarioDao.findById(idtblUser.longValue());
+            UsuarioTypeResponse response = usuarioMapper.usuarioEntityToTypeResponse(usuario);
+            LOG.info("Finaliza listar usuario por id Impl");
+            return  Collections.singletonList(response);
+        }catch (ApplicationException e){
+            LOG.error("Se presento un error al listar usuario por id"+ e.getMessage());
             throw new ApplicationException(ERROR_SERVICIO + e.getMessage());
         }
     }

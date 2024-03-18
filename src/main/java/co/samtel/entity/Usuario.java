@@ -20,11 +20,11 @@ public class Usuario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "id_user")
-    public Long id;
+    private Long id;
     @Column (name = "name_user")
-    public String name;
+    private String name;
     @Column (name = "lastname_user")
-    public String lastname;
+    private String lastname;
     @Column (name = "createat_user")
-    public LocalDate createat;
+    private LocalDate createat;
 }
