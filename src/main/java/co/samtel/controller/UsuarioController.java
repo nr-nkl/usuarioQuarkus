@@ -26,9 +26,9 @@ public class UsuarioController implements V1UsuarioApi {
     public Response crearUsuario(UsuarioTypeInput usuarioTypeInput) {
         LOG.info("Inicio el proceso crearUsuario Controller");
         UsuarioTypeResponse usuarioType = null;
-
         try{
             usuarioType = usuarioServiceImpl.crearUsuario(usuarioTypeInput);
+            LOG.info("Termina el proceso crearUsuario Controller");
         }catch(ApplicationException e){
             LOG.error(ERROR_SERVICIO + e.getMessage()+ " crearUsuario Controller.");
             return  Response.status(Response.Status.BAD_REQUEST).entity(usuarioType).build();
@@ -37,37 +37,38 @@ public class UsuarioController implements V1UsuarioApi {
     }
 
     @Override
-    public Response editarUsuario(Integer idtblUser, UsuarioTypeInput usuarioTypeInput) {
+    public Response editarUsuarioId(Integer idtblUser, UsuarioTypeInput usuarioTypeInput) {
         LOG.info("Inicio el proceso editarUsuario Controller");
-
         try{
-            usuarioServiceImpl.editarUsuario(idtblUser, usuarioTypeInput);
+            usuarioServiceImpl.editarUsuarioId(idtblUser, usuarioTypeInput);
+            LOG.info("Termina el proceso editarUsuario Controller");
         }catch(ApplicationException e){
             LOG.error(ERROR_SERVICIO + e.getMessage()+ " editarUsuario Controller.");
             return  Response.status(Response.Status.BAD_REQUEST).entity(usuarioTypeInput).build();
         }
-
-        return Response.ok().entity(usuarioTypeInput).build();
+        return Response.status(Response.Status.OK).entity(usuarioTypeInput).build();
     }
 
     @Override
-    public Response eliminarUsuario(Integer idtblUser) {
+    public Response eliminarUsuarioId(Integer idtblUser) {
         LOG.info("Inicio el proceso eliminarUsuario Controller.");
         try{
-            usuarioServiceImpl.eliminarUsuario(idtblUser);
+            usuarioServiceImpl.eliminarUsuarioId(idtblUser);
+            LOG.info("Termina el proceso eliminarUsuario Controller.");
         }catch(ApplicationException e){
             LOG.error(ERROR_SERVICIO + e.getMessage()+ " eliminarUsuario Controller.");
             return  Response.status(Response.Status.BAD_REQUEST).build();
         }
-        return Response.noContent().build();
+        return Response.status(Response.Status.NO_CONTENT).build();
     }
 
     @Override
-    public Response listarTodosLosUsuario() {
+    public Response listarTodosLosUsuarios() {
         LOG.info("Inicio el proceso listarTodosLosUsuarios Controller.");
         List<UsuarioTypeResponse> usuarioType = null;
         try{
             usuarioType = usuarioServiceImpl.listarTodosLosUsuarios();
+            LOG.info("Termina el proceso listarTodosLosUsuarios Controller.");
         }catch(ApplicationException e){
             LOG.error(ERROR_SERVICIO + e.getMessage()+ " listarTodosLosUsuario Controller.");
             return  Response.status(Response.Status.BAD_REQUEST).entity(usuarioType).build();
@@ -76,18 +77,16 @@ public class UsuarioController implements V1UsuarioApi {
     }
 
     @Override
-    public Response listarUsuario(Integer idtblUser) {
+    public Response buscarUsuarioId(Integer idtblUser) {
         LOG.info("Inicio el proceso de listarUsuario Controller.");
-
         List<UsuarioTypeResponse> usuarioType = null;
-
         try{
-            usuarioType = usuarioServiceImpl.listarUsuario(idtblUser);
+            usuarioType = usuarioServiceImpl.buscarUsuarioId(idtblUser);
+            LOG.info("Termina el proceso de listarUsuario Controller.");
         }catch(ApplicationException e){
             LOG.error(ERROR_SERVICIO + e.getMessage()+ " listarUsuario Controller.");
             return  Response.status(Response.Status.BAD_REQUEST).entity(usuarioType).build();
         }
-
         return Response.status(Response.Status.FOUND).entity(usuarioType).build();
     }
 

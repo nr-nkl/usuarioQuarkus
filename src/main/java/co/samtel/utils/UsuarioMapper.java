@@ -21,12 +21,10 @@ public class UsuarioMapper {
 
     public List<UsuarioTypeResponse> usuarioTypeListEntityToTypeResponse(List<Usuario> listUsuarios ){
         List<UsuarioTypeResponse> usuariosTypeResponseList = new ArrayList<>();
-
         for (Usuario usuario: listUsuarios){
             UsuarioTypeResponse response = new ModelMapper().map(usuario, UsuarioTypeResponse.class);
             usuariosTypeResponseList.add(response);
         }
-
         return usuariosTypeResponseList;
     }
 

@@ -1,6 +1,5 @@
 package co.samtel.service.impl;
 
-import co.samtel.controller.UsuarioController;
 import co.samtel.dao.UsuarioDao;
 import co.samtel.entity.Usuario;
 import co.samtel.gen.type.UsuarioTypeInput;
@@ -40,63 +39,56 @@ public class UsuarioServiceImpl implements IUsuarioService {
             LOG.info("Finaliza crearUsuario Impl");
             return  usuarioTypeResponses;
         }catch (ApplicationException e){
-            LOG.error("Error al crear usuario");
+            LOG.error(ERROR_SERVICIO + e.getMessage());
             throw new ApplicationException(ERROR_SERVICIO + e.getMessage());
         }
     }
 
     @Transactional // Sin esto no funciona .-.
-    public List<UsuarioTypeResponse> editarUsuario(Integer idtblUser, UsuarioTypeInput usuarioTypeInput) {
+    public List<UsuarioTypeResponse> editarUsuarioId(Integer idtblUser, UsuarioTypeInput usuarioTypeInput) {
         LOG.info("Inicia editarUsuario Impl.");
-
         try {
             Usuario usuario = usuarioDao.findById(idtblUser.longValue());
             Usuario usuarioCamb = usuarioMapper.usuarioTypeToEntity(usuarioTypeInput);
-
             usuario.setName(usuarioCamb.getName());
             usuario.setLastname(usuarioCamb.getLastname());
             usuario.setCreateat(usuarioCamb.getCreateat());
-
             UsuarioTypeResponse usuarioTypeResponse = usuarioMapper.usuarioEntityToTypeResponse(usuarioCamb);
             LOG.info("Finaliza editarUsuario Impl.");
-
             return Collections.singletonList(usuarioTypeResponse);
         }catch (ApplicationException e){
-            LOG.error("Ha ocurrido en editarUsuario: "+e.getMessage());
+            LOG.error(ERROR_SERVICIO + e.getMessage());
             throw new ApplicationException(ERROR_SERVICIO + e.getMessage());
         }
     }
 
     @Transactional
-    public void eliminarUsuario(Integer idtblUser) {
+    public void eliminarUsuarioId(Integer idtblUser) {
         LOG.info("Inicia eliminarUsuario Impl.");
-
         try{
             usuarioDao.deleteById(idtblUser.longValue());
             LOG.info("Termina eliminarUsuario Impl.");
         }catch (ApplicationException e){
-            LOG.error("Ha ocurrido un error en eliminarUsuario: "+e.getMessage());
+            LOG.error(ERROR_SERVICIO + e.getMessage());
             throw new ApplicationException(ERROR_SERVICIO + e.getMessage());
         }
     }
 
-    public List<UsuarioTypeResponse> listarUsuario(Integer idtblUser){
+    public List<UsuarioTypeResponse> buscarUsuarioId(Integer idtblUser){
         LOG.info("Inicia listarUsuario Impl");
-
         try {
             Usuario usuario = usuarioDao.findById(idtblUser.longValue());
             UsuarioTypeResponse response = usuarioMapper.usuarioEntityToTypeResponse(usuario);
-            LOG.info("Finaliza listar usuario por id Impl");
+            LOG.info("Finaliza listarUsuario Impl");
             return  Collections.singletonList(response);
         }catch (ApplicationException e){
-            LOG.error("Se presento un error al listar usuario por id"+ e.getMessage());
+            LOG.error(ERROR_SERVICIO + e.getMessage());
             throw new ApplicationException(ERROR_SERVICIO + e.getMessage());
         }
     }
 
     public List<UsuarioTypeResponse> listarTodosLosUsuarios() {
         LOG.info("Inicia listarTodosLosUsuarios Impl.");
-
         try{
             PanacheQuery query = usuarioDao.findAll();
             List<Usuario> listUsuarios = query.list();

@@ -51,10 +51,10 @@ paths:
         "404":
           description: "No se encuentra la novedad."
 # -------------------- Listar Usuario -------------------------
-  /v1/es/listUsuario/{idtbl_user}:
+  /v1/es/buscarUsuarioId/{idtbl_user}:
     get:
       tags:
-        - Listar usuario
+        - Buscar Usuario
       parameters:
         - in: path
           name: idtbl_user   # Note the name is the same as in the path
@@ -63,7 +63,7 @@ paths:
             type: integer
             minimum: 1
           description: The user ID
-      operationId: listarUsuario
+      operationId: buscarUsuarioId
       responses:
         "200":
           description: Usuario encontrado.
@@ -78,7 +78,7 @@ paths:
         "404":
           description: "No se encuentra la novedad."
 #---------------- Eliminar Usuario ----------------
-  /v1/es/eliminarUsuario/{idtbl_user}:
+  /v1/es/eliminarUsuarioId/{idtbl_user}:
     delete:
       tags:
         - Eliminar Usuario
@@ -90,7 +90,7 @@ paths:
             type: integer
             minimum: 1
           description: The user ID
-      operationId: eliminarUsuario
+      operationId: eliminarUsuarioId
       responses:
         "200":
           description: Usuario eliminado.
@@ -103,7 +103,7 @@ paths:
     get:
       tags:
         - Listar todos los usuario
-      operationId: listarTodosLosUsuario
+      operationId: listarTodosLosUsuarios
       responses:
         "200":
           description: Lista de usuario.
@@ -118,7 +118,7 @@ paths:
         "404":
           description: "No se encuentra la novedad."
 #------------- Actualizar Usuario ----------------
-  /v1/es/editarUsuario/{idtbl_user}:
+  /v1/es/editarUsuarioId/{idtbl_user}:
     put:
       tags:
         - Editar usuario
@@ -130,7 +130,7 @@ paths:
             type: integer
             minimum: 1
           description: The user ID
-      operationId: editarUsuario
+      operationId: editarUsuarioId
       requestBody:
         description: Editar usuario
         content:
